@@ -1,6 +1,15 @@
 import asyncio
 import os
-import bleak
+from bleak import BleakScanner
+
+async def list_devices():
+    devices = await BleakScanner.discover()
+
+    if devices:
+        for device in devices:
+            print(f'{device.name} found')
+    else:
+        print("Device not found.")
 
 async def connect_to_device(device_name):
     devices = await bleak.discover()
@@ -25,7 +34,8 @@ async def connect_to_device(device_name):
 #         pygame.time.Clock().tick(10)
 
 async def main(device_name, mp3_file_path):
-    await connect_to_device(device_name)
+    await list_devices()
+    # await connect_to_device(device_name)
     # await play_mp3(mp3_file_path)
 
 if __name__ == "__main__":
