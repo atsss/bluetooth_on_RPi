@@ -1,3 +1,4 @@
+import argparse
 import asyncio
 import os
 from bleak import BleakScanner, BleakClient
@@ -13,7 +14,7 @@ async def connect_to_device(device_name):
             print(f"Successed connecting with device '{device_name}'.")
 
             # ここにBluetoothデバイスへの操作を記述
-            await asyncio.sleep(5)
+            await asyncio.sleep(15)
 
             print(f"Start disconnecting with device '{device_name}'.")
             await client.disconnect()
@@ -26,6 +27,13 @@ async def main(device_name):
     await connect_to_device(device_name)
 
 if __name__ == "__main__":
-    bluetooth_device_name = "74-45-CE-95-6C-32"
+    parser = argparse.ArgumentParser(
+      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument(
+      '--deviceName',
+      help='Name of Bluetooth device',
+      required=True,
+     )
+    args = parser.parse_args()
 
-    asyncio.run(main(bluetooth_device_name))
+    asyncio.run(main(args.deviceName))
