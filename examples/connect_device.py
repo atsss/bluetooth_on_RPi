@@ -7,14 +7,17 @@ async def connect_to_device(device_name):
     target_device = next((device for device in devices if device.name == device_name), None)
 
     if target_device:
-        print(f"Start connecting with device '{device_name}'.")
         async with BleakClient(target_device.address) as client:
+            print(f"Start connecting with device '{device_name}'.")
             await client.connect()
+            print(f"Successed connecting with device '{device_name}'.")
 
             # ここにBluetoothデバイスへの操作を記述
             await asyncio.sleep(5)
 
+            print(f"Start disconnecting with device '{device_name}'.")
             await client.disconnect()
+            print(f"Successed disconnecting with device '{device_name}'.")
         print(f"Finish connecting with device '{device_name}'.")
     else:
         print(f"Device '{device_name}' not found.")
