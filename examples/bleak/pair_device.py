@@ -8,7 +8,7 @@ async def pair_device(device_name):
     target_device = next((device for device in devices if device.name == device_name), None)
 
     if target_device:
-        async with BleakClient(target_device.address) as client:
+        async with BleakClient(target_device.address, timeout=20) as client:
             print(f"Start pairing with device '{device_name}'.")
             await client.pair()
             print(f"Successed pairing with device '{device_name}'.")
